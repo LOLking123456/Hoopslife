@@ -1,0 +1,374 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Rayfield/main/source"))()
+
+
+local Window = Rayfield:CreateWindow({
+	Name = "Legend HandlesYT | Hoops Life Basketball",
+	LoadingTitle = "Hoops Life Basketball",
+	LoadingSubtitle = "YT: Legend Handles",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "script"
+
+}	})
+local Tab = Window:CreateTab("Main-Features", 4483362458) -- Title, Image
+
+Tab:CreateButton({
+	Name = "Aimbot",
+	Callback = function()
+	--[[
+        Script Name: Hoops Life Auto Time (Semi-Aimbot)
+        Game Link: https://www.roblox.com/games/7540727946/Basketball-park-Hoops-Life-Pre-Alpha
+        Last Update: 6/26/2022
+--]]
+
+_G.Keybind = Enum.KeyCode.E
+
+local UIS = game:GetService("UserInputService")
+local RUN = game:GetService("RunService")
+local Storage = game:GetService("ReplicatedStorage")
+local Path = Storage:WaitForChild("Remotes").Shoot
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Cheat
+
+local Cheat_AutoTime = function()
+Character.Meter.SurfaceGui.ImageLabel.Shoot.Size = UDim2.new(1, 0, 1, 0)
+end
+
+UIS.InputBegan:Connect(function(input, gpe)
+if input.KeyCode == _G.Keybind and not gpe then
+Cheat = RUN.Stepped:Connect(Cheat_AutoTime)
+end
+end)
+
+UIS.InputEnded:Connect(function(input, gpe)
+if input.KeyCode == _G.Keybind and not gpe then
+wait(3)
+Cheat:Disconnect()
+Character.Meter.SurfaceGui.ImageLabel.Shoot.Size = UDim2.new(1, 0, 0, 0)
+end
+end)
+	end,
+})
+
+
+
+Tab:CreateButton({
+	Name = "CFrame Speed (Z)",
+	Callback = function()
+ 	repeat
+		wait()
+	until game:IsLoaded()
+	local L_134_ = game:service('Players')
+	local L_135_ = L_134_.LocalPlayer
+	repeat
+		wait()
+	until L_135_.Character
+	local L_136_ = game:service('UserInputService')
+	local L_137_ = game:service('RunService')
+	getgenv().Multiplier = 0.5
+	local L_138_ = true
+	local L_139_
+	L_136_.InputBegan:connect(function(L_140_arg0)
+		if L_140_arg0.KeyCode == Enum.KeyCode.LeftBracket then
+			Multiplier = Multiplier + 0.01
+			print(Multiplier)
+			wait(0.2)
+			while L_136_:IsKeyDown(Enum.KeyCode.LeftBracket) do
+				wait()
+				Multiplier = Multiplier + 0.01
+				print(Multiplier)
+			end
+		end
+		if L_140_arg0.KeyCode == Enum.KeyCode.RightBracket then
+			Multiplier = Multiplier - 0.01
+			print(Multiplier)
+			wait(0.2)
+			while L_136_:IsKeyDown(Enum.KeyCode.RightBracket) do
+				wait()
+				Multiplier = Multiplier - 0.01
+				print(Multiplier)
+			end
+		end
+		if L_140_arg0.KeyCode == Enum.KeyCode.Z then
+			L_138_ = not L_138_
+			if L_138_ == true then
+				repeat
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.Humanoid.MoveDirection * Multiplier
+					game:GetService("RunService").Stepped:wait()
+				until L_138_ == false
+			end
+		end
+	end)
+end})
+
+
+   
+   local Slider = Tab:CreateSlider({
+	Name = "CFrame Speed",
+	Range = {0, 5},
+	Increment = 1,
+	Suffix = "Speed",
+	CurrentValue = 0,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(s)
+ getgenv().Multiplier = s
+	end,
+})
+
+
+Tab:CreateButton({
+	Name = "Infinite Stamina",
+	Callback = function()
+	   game.Players.LocalPlayer.Character.Meter.SurfaceGui.ImageLabel.Sprint.Size = UDim2.new(1, 0, -100000, 0)
+		end,
+})
+
+Tab:CreateButton({
+	Name = "Invisible",
+	Callback = function()
+	    local removeNametags = false -- remove custom billboardgui nametags from hrp, could trigger anticheat
+
+local plr = game:GetService("Players").LocalPlayer
+local character = plr.Character
+local hrp = character.HumanoidRootPart
+local old = hrp.CFrame
+
+if not character:FindFirstChild("LowerTorso") or character.PrimaryPart ~= hrp then
+return print("unsupported")
+end
+
+if removeNametags then
+local tag = hrp:FindFirstChildOfClass("BillboardGui")
+if tag then tag:Destroy() end
+
+hrp.ChildAdded:Connect(function(item)
+if item:IsA("BillboardGui") then
+task.wait()
+item:Destroy()
+end
+end)
+end
+
+local newroot = character.LowerTorso.Root:Clone()
+hrp.Parent = workspace
+character.PrimaryPart = hrp
+character:MoveTo(Vector3.new(old.X,9e9,old.Z))
+hrp.Parent = character
+task.wait(0.5)
+newroot.Parent = hrp
+hrp.CFrame = old
+		end,
+})
+    
+
+    
+	 Tab:CreateToggle({
+	Name = "Auto Layup Spin",
+	CurrentValue = false,
+	Callback = function(Value)
+	     a = Value
+        while a do task.wait()
+        pcall(function()
+local Event = game:GetService("ReplicatedStorage").Remotes.LayupSpin
+Event:FireServer()
+ end)
+        end
+	end,
+})
+   
+
+
+    
+	 Tab:CreateToggle({
+	Name = "Auto Self Lob",
+	CurrentValue = false,
+	Callback = function(Value)
+	     a = Value
+        while a do task.wait()
+        pcall(function()
+local Event = game:GetService("ReplicatedStorage").Remotes.SelfLob
+Event:FireServer()
+ end)
+        end
+	end,
+})
+   
+
+	 Tab:CreateToggle({
+	Name = "Auto Dunk",
+	CurrentValue = false,
+	Callback = function(Value)
+	     a = Value
+        while a do task.wait()
+        pcall(function()
+local Event = game:GetService("ReplicatedStorage").Remotes.Dunk
+Event:FireServer()
+ end)
+        end
+	end,
+})
+   
+
+
+	 Tab:CreateToggle({
+	Name = "Auto DoubleClutch",
+	CurrentValue = false,
+	Callback = function(Value)
+	     a = Value
+        while a do task.wait()
+        pcall(function()
+ 
+local Event = game:GetService("ReplicatedStorage").Remotes.DoubleClutch
+Event:FireServer()
+
+ end)
+        end
+	end,
+})
+   
+local Tab = Window:CreateTab("Credits", 4483362458) -- Title, Image
+
+Tab:CreateButton({
+	Name = "Starter Island",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3388.55713, 136.208038, 1728.40283, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+	end,
+})
+Tab:CreateButton({
+	Name = "Jungle",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1986.62134, 131.401001, 598.679565, 0.578843892, 0, 0.81543839, 0, 1, 0, -0.81543839, 0, 0.578843892)
+	end,
+})
+Tab:CreateButton({
+	Name = "Buggy",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3007.479, 141.433548, -587.198181, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+	end,
+})
+Tab:CreateButton({
+	Name = "Marine",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4941.4248, 137.19136, 56.7856445, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+	end,
+})
+Tab:CreateButton({
+	Name = "GrandCity",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1038.11609, 124.763535, -1008.62189, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+	end,
+})
+Tab:CreateButton({
+	Name = "Gacha",
+	Callback = function()
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3432.12598, 140.795761, 1771.28772, 0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, 0.374604106)
+	end,
+})
+local Tab = Window:CreateTab("Misc", 4483362458) -- Title, Image
+
+Tab:CreateButton({
+	Name = "Equip All Tools",
+	Callback = function()
+		for _, tool in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+            if tool:IsA("Tool") then
+                 tool.Parent = game:GetService("Players").LocalPlayer.Character
+            end
+        end
+	end,
+})
+
+Tab:CreateInput({
+	Name = "FPS CAP",
+	PlaceholderText = "Input Placeholder",
+	RemoveTextAfterFocusLost = false,
+	Callback = function(Text)
+	    setfpscap(Text)
+		-- The function that takes place when the input is changed
+    		-- The variable (Text) is a string for the value in the text box
+	end,
+})
+
+Tab:CreateButton({
+	Name = "Remove Effects for suna",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Game["__Extra"].Vfx.Suna:Destroy()
+	end,
+})
+
+Tab:CreateButton({
+	Name = "Remove Effects for Mera",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Game["__Assets"].SkillAssets["Mera Mera no Mi"]:Destroy()
+	end,
+})
+
+Tab:CreateButton({
+	Name = "Remove Effects for Pika",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Game["__Extra"].Vfx.Light:Destroy()
+	end,
+})
+
+for _, v in pairs(Functions) do
+	task.spawn(v)
+end
+
+
